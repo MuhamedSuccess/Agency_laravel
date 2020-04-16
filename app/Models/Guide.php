@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Trip extends Model
+class Guide extends Model
 {
-    protected $table = 'trip';
-    
+    protected $table = 'guide';
 }

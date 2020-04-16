@@ -23,6 +23,27 @@ Route::group(['middleware' => ['web', 'checkblocked']], function () {
     Route::get('/map', 'WelcomeController@map')->name('map');
 });
 
+
+
+// Route::resource('/trip', 'Trip\TripController', [
+
+//     'names' => [
+//         'index'   => 'homepage',
+//         'create' => '/trip/create',
+//     ],
+
+    
+// ]);
+
+
+//trip routes
+Route::get('/trip/create', 'Trip\TripController@create')->name('trip/create');
+Route::post('/trip-create', 'Trip\TripController@store')->name('trip-create');
+
+Route::get('/trip/{id}', [    
+    'uses' => 'Trip\TripController@show',
+]);
+
 // Authentication Routes
 Auth::routes();
 
@@ -139,5 +160,3 @@ Route::redirect('/php', '/phpinfo', 301);
 
 
 
-//trip routes
-Route::get('/trip/create', 'Trip\TripController@create')->name('trip/create');

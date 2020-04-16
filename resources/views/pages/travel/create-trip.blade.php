@@ -15,14 +15,16 @@
                 <div class="card-heading"></div>
                 <div class="card-body">
                     <h2 class="title">Create Trip</h2>
-                    <form method="POST" enctype='multipart/form-data' action="{{ route('trip/create') }}">
+                    <form method="POST" enctype='multipart/form-data' action="{{ route('trip-create') }}">
+                    {!! Form::open(array('route' => 'trip-create', 'method' => 'POST', 'role' => 'form')) !!}
+                        {!! csrf_field() !!}
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="Name" name="name">
                         </div>
 
                         <div class="input-file-container">
             <!--<input type="file"  id="image" #tripImage formControlName="image">-->
-                            <input class="input-file"  id="my-file" type="file">
+                            <input class="input-file"  name="cover" id="my-file" type="file">
                             <!-- <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label> -->
                         </div>
 
@@ -54,10 +56,11 @@
 
                         <div class="input-group">
                                     <div class="rs-select2 js-select-simple select--no-search">
-                                    <label for="Guides" class="col-md-10 col-form-label">Trip plans</label>
-                                        <select name="gender">
-                                            <option disabled="disabled" selected="selected">Trip plans</option>
-                                            
+                                    <label for="plans" class="col-md-10 col-form-label">Trip plans</label>
+                                        <select name="plans">
+                                            @foreach($trip_plans as $plan)
+                                                <option  value="{{$plan->id}}">{{$plan->name}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="select-dropdown"></div>
                                     </div>
@@ -65,19 +68,25 @@
 
                         <div class="input-group">
                             <div class="rs-select2 js-select-simple select--no-search">
-                            <label for="Guides" class="col-md-10 col-form-label">Guide</label>
-                                <select name="class">
-                                    
-                                </select>
+                            <label for="guides" class="col-md-10 col-form-label">Guide</label>
+                            
+                            <select name="guides">
+                                            @foreach($guides as $guide_person)
+                                                <option  value="{{$guide_person->id}}">{{$guide_person->name}}</option>
+                                            @endforeach
+                                        </select>
+                            
                                 <div class="select-dropdown"></div>
                             </div>
                         </div>
                         <div class="input-group">
                             <div class="rs-select2 js-select-simple select--no-search">
-                            <label for="Guides" class="col-md-10 col-form-label">Tourism Types</label>
-                                <select name="class">
-                                    
-                                </select>
+                            <label for="Types" class="col-md-10 col-form-label">Tourism Types</label>
+                            <select name="Types">
+                                            @foreach($tourism_types as $type)
+                                                <option  value="{{$type->id}}">{{$plan->name}}</option>
+                                            @endforeach
+                                        </select>
                                 <div class="select-dropdown"></div>
                             </div>
                         </div>
@@ -85,6 +94,7 @@
                         <div class="p-t-30">
                             <button class="btn btn--radius btn--green" type="submit">Search</button>
                         </div>
+                        {{ Form::close() }}
                     </form>
                 </div>
             </div>
