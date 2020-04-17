@@ -18,6 +18,7 @@ use Image;
 use jeremykenedy\Uuid\Uuid;
 use Validator;
 use View;
+use Illuminate\Support\Facades\DB;
 
 class ProfilesController extends Controller
 {
@@ -97,9 +98,12 @@ class ProfilesController extends Controller
                         ->get();
 
         $currentTheme = Theme::find($user->profile->theme_id);
+        // $profile = DB::select('SELECT * FROM profiles WHERE user_id = 1');
+        $profile = Profile::where('user_id', $user->id)->first();
 
         $data = [
             'user'         => $user,
+            'profile'      => $profile, 
             'themes'       => $themes,
             'currentTheme' => $currentTheme,
 
@@ -122,16 +126,38 @@ class ProfilesController extends Controller
     {
         $user = $this->getUserByUsername($username);
 
-        $input = $request->only('theme_id', 'location', 'bio', 'twitter_username', 'github_username', 'avatar_status');
+        $input = $request->only('theme_id', 'location', 'bio', 'twitter_username', 'github_username', 'avatar_status', 'avatar');
+
+
+        $final_path = '';
+        if ($request->hasFile('avatar')) {
+            // Get filename with the extension
+            $filenameWithExt = $request->file('avatar')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('avatar')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $request->file('avatar')->storeAs('public/avatar/', $fileNameToStore);
+       
+            $final_path = $fileNameToStore;
+        
+        }
+
 
         $ipAddress = new CaptureIpTrait();
 
         if ($user->profile === null) {
             $profile = new Profile();
-            $profile->fill($input);
+            // $profile->fill($input);
+            $profile->avatar = $final_path;
             $user->profile()->save($profile);
         } else {
-            $user->profile->fill($input)->save();
+            // $user->profile->fill($input)->save();
+            $user->profile->avatar = $final_path;
+            $user->profile->save();
         }
 
         $user->updated_ip_address = $ipAddress->getClientIp();

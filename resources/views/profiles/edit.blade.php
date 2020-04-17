@@ -51,7 +51,7 @@
                                                 </div>
                                                 {!! Form::model($user->profile, ['method' => 'PATCH', 'route' => ['profile.update', $user->name], 'id' => 'user_profile_form', 'class' => 'form-horizontal', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
                                                     {{ csrf_field() }}
-                                                    <div class="row">
+                                                    <!-- <div class="row">
                                                         <div class="col-10 offset-1 col-sm-10 offset-sm-1 mb-1">
                                                             <div class="row" data-toggle="buttons">
                                                                 <div class="col-6 col-xs-6 right-btn-container">
@@ -65,6 +65,13 @@
                                                                     </label>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            
+                                                            <img class="img-responsive" width="150" height="150" src="storage/avatar/{{$user->profile->avatar}}">
+                                                            <input type="file" name="avatar">
                                                         </div>
                                                     </div>
                                                     <div class="form-group has-feedback {{ $errors->has('theme') ? ' has-error ' : '' }}">
@@ -233,6 +240,9 @@
                                                             @endif
                                                         </div>
                                                     </div>
+
+                                                   
+
 
                                                     <div class="form-group row">
                                                         <div class="col-md-9 offset-md-3">

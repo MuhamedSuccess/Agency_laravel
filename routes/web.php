@@ -44,6 +44,9 @@ Route::get('/trip/{id}', [
     'uses' => 'Trip\TripController@show',
 ]);
 
+
+
+
 // Authentication Routes
 Auth::routes();
 

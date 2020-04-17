@@ -43,7 +43,7 @@
                                     </div>
                                     @if ($errors->has('email'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{rst('email') }}</strong>
                                         </span>
                                     @endif
                                 </div>

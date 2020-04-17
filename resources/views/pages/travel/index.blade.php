@@ -12,8 +12,9 @@
  
 	
 
-	@if(count($trips) >1 )  
-		@foreach($trips as $trip)
+	@if(count($trips) >= 1 )  
+		
+			
 			<div id="fh5co-tours" class="fh5co-section-gray">
 					<div class="container">
 						<div class="row">
@@ -23,9 +24,10 @@
 							</div>
 						</div>
 						<div class="row">
+						@foreach($trips as $trip)
 							<div class="col-md-4 col-sm-6 fh5co-tours animate-box" data-animate-effect="fadeIn">
 								<div href="#">
-								<img src="{{asset('travel/images/place-1.jpg')}} " alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+								<img src="storage/trip/cover_images/{{$trip->trip_cover}}" alt="Free HTML5 Website Template by FreeHTML5.co" width="100%" class="img-responsive">
 									<div class="desc">
 										<span></span>
 										<h3>{{$trip->name}}</h3>
@@ -35,15 +37,16 @@
 									</div>
 								</div>
 							</div>
-							
+						@endforeach
 							<div class="col-md-12 text-center animate-box">
 								<p><a class="btn btn-primary btn-outline btn-lg" href="#">See All Offers <i class="icon-arrow-right22"></i></a></p>
 							</div>
 						</div>
 					</div>
 				</div>
-		@endforeach	
+		
 	@else
+		<p>no trips found</p>
 	@endif		
 
 

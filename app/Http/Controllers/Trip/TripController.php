@@ -9,7 +9,9 @@ use App\Models\TripPlan;
 use App\Models\TourismType;
 use App\Models\Guide;
 use Illuminate\Support\Facades\DB;
-
+use File;
+use Image;
+use Illuminate\Support\Facades\Storage;
 
 
 class TripController extends Controller
@@ -22,7 +24,7 @@ class TripController extends Controller
 
 
 
-    public function index()
+    public function homepage()
     {
         $trips = Trip::all();
         return view('pages.travel.index')->with('trips', $trips);
@@ -48,26 +50,60 @@ class TripController extends Controller
     }
 
 
-    public function store(array $data)
+    public function store(Request $request)
     {
+        // echo $data->input();
+
+        
+
+        print_r($request->input());
         if ($request->hasFile('cover')) {
             $file = $request->file('cover');
-            $cover = $this->upload($avatar);
+            
+            
+            
+                // Get filename with the extension
+                $filenameWithExt = $request->file('cover')->getClientOriginalName();
+                // Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Get just ext
+                $extension = $request->file('cover')->getClientOriginalExtension();
+                // Filename to store
+                $fileNameToStore= $filename.'_'.time().'.'.$extension;
+                // Upload Image
+                $path = $request->file('cover')->storeAs('public/trip/cover_images', $fileNameToStore);
+           
+            
+            
+            
+            // $cover = $this->upload($file);
 
-            $trip = Trip::create(
-                [
-                    ['name'] => $data['name'],
-                    ['description'] => $data['description'],
-                    ['days'] => $data['days'],
-                    ['cover'] => $cover,
-                    ['guide_id'] => $data['guide'],
-                    ['trip+plan_id'] => $data['trip_plan'],
-                    ['tourism_type_id'] => $data['tourim_type'],
+            $trip = new Trip();
 
-                ]
-            );
+            $trip->name = $request->input('name');
+            $trip->description = $request->input('description');
+            $trip->days = $request->input('days');
+            $trip->date = date('Y-m-d H:i:s');
+            $trip->trip_cover = $fileNameToStore;
+            $trip->guide_id = $request->input('guide');
+            $trip->trip_plan_id = $request->input('trip_plan');
+            $trip->tourism_type_id = $request->input('tourim_type');
+
+            // $trip = Trip::create(
+            //     [
+            //         ['name'] => $request->input('name'),
+            //         ['description'] => $request->input('description') ,
+            //         ['days'] => $request->input('days') ,
+            //         ['date'] => $request->input('date') ,
+            //         ['cover'] =>$cover['path'],
+            //         ['guide_id'] => $request->input('guide') ,
+            //         ['trip_plan_id'] =>$request->input('trip_plan')  ,
+            //         ['tourism_type_id'] => $request->input('tourim_type')  ,
+
+            //     ]
+            // );
             $trip->save();
-            return redirect('trip');
+            return redirect('/trip')->with('success', 'Trip Created Successfully');
 
         }else {
             return response()->json(false, 200);
@@ -91,24 +127,45 @@ class TripController extends Controller
     public function upload($file)
     {
         
+
+
+        $cover = $file;
+        $filename = 'cover.'.$cover->getClientOriginalExtension();
+        $save_path = storage_path().'/trips/cover/';
+        $path = $save_path.$filename;
+        $public_path = '/images/trip/cover/'.$filename;
+
+        // Make the user a folder and set permissions
+        File::makeDirectory($save_path, $mode = 0755, true, true);
+
+        // Save the file to the server
+        Image::make($cover)->resize(300, 300)->save($save_path.$filename);
+
+
             
-            $cover = $file;
-            $filename = 'trip-cover.'.$cover;
-            $save_path = storage_path().'/trips/cover/';
-            $path = $save_path.$filename;
-            $public_path = '/images/trip/'.$file.'/cover/'.$filename;
+            // $cover = $file;
+            // $filename = '/cover/'.date('H:i:s').'.'.$cover->getClientOriginalExtension();
+            // $save_path = storage_path().'/trips/cover/';
+            // $path = $save_path.$filename;
+            // $public_path = '/images/trip/'.$file.$filename;
 
-            // Make the user a folder and set permissions
-            File::makeDirectory($save_path, $mode = 0755, true, true);
+            // // Make the user a folder and set permissions
+            // // File::makeDirectory($save_path, $mode = 0755, true, true);
+            // $file->move($save_path, $save_path.$filename);
+            // // Save the file to the server
+            
 
-            // Save the file to the server
-            Image::make($avatar)->resize(300, 300)->save($save_path.$filename);
+            // Image::make($file)->resize(300, 300)->save($save_path.$filename);
+
+
+            // $extension = $cover->getClientOriginalExtension();
+            // $public_path = '/images/trip/'.$cover->getFilename().'.'.$extension;
+            // Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
 
             // Save the public image path
-            $currentUser->profile->avatar = $public_path;
-            $currentUser->profile->save();
+           
 
-            return response()->json(['path' => $path], 200);
+            return $public_path;
         
     }
 
