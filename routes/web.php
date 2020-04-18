@@ -46,6 +46,35 @@ Route::get('/trip/{id}', [
 
 
 
+// mail routes
+
+Route::get ( '/mail', function () {
+	return view ( 'pages.messanger.home' );
+} );
+
+// Route::get ( '/mail', function () {
+// 	return view ( 'pages.messanger.mail' );
+// } );
+
+Route::any ( 'sendemail', function () {
+    if (Request::get ( 'message' ) != null)
+        $data = array (
+                'bodyMessage' => Request::get ( 'message' ) 
+        );
+    else
+        $data [] = '';
+    Mail::send ( 'pages.messanger.email', $data, function ($message) {
+        
+        $message->from ( 'ahmedadelfcih182@gmail.com', 'Just Laravel' );
+        
+        $message->to ( Request::get ( 'toEmail' ) )->subject ( 'Just Laravel demo email using SendGrid' );
+    } );
+    return Redirect::back ()->withErrors ( [ 
+            'Your email has been sent successfully' 
+    ] );
+} );
+
+
 
 // Authentication Routes
 Auth::routes();

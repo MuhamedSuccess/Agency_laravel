@@ -30,5 +30,11 @@ class WelcomeController extends Controller
     }
 
 
+    public function mail()
+    {
+        return view('pages.mail.map-geolocation');
+    }
+
+
 
 }
