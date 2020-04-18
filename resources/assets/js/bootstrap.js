@@ -2,6 +2,12 @@ window._ = require('lodash');
 window.Popper = require('popper.js').default;
 import my_map from './map.js';
 window.my_map = my_map;
+
+import map_geolocation from './map-geolocation.js';
+window.map_geolocation = map_geolocation;
+
+
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This

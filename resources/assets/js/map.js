@@ -1,68 +1,105 @@
 import 'ol/ol.css';
-import {Map, View} from 'ol';
-
-import OSM from 'ol/source/OSM';
-
 import Feature from 'ol/Feature';
+import Map from 'ol/Map';
+import Overlay from 'ol/Overlay';
+import View from 'ol/View';
 import Point from 'ol/geom/Point';
-// import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
-import VectorLayer from 'ol/layer/Vector';
-import TileLayer from 'ol/layer/Tile';
+import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
+import TileJSON from 'ol/source/TileJSON';
 import VectorSource from 'ol/source/Vector';
+import {Icon, Style} from 'ol/style';
 
 
 var my_map = {                       // <-- add this line to declare the object
   display: function () {           // <-- add this line to declare a method 
 
 
-   
-var iconFeatures=[];
 var iconFeature = new Feature({
-    geometry: new Point([0, 0]),
-    name: 'Null Island',
-    population: 4000,
-    rainfall: 500
-    });
-
-
-
-iconFeatures.push(iconFeature);
-
-
-var vectorSource = VectorSource({
-  features: iconFeatures //add an array of features
+  geometry: new Point([0, 0]),
+  name: 'Null Island',
+  population: 4000,
+  rainfall: 500
 });
 
 var iconStyle = new Style({
-  image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+  image: new Icon({
     anchor: [0.5, 46],
     anchorXUnits: 'fraction',
     anchorYUnits: 'pixels',
-    opacity: 0.75,
-    src: 'data/icon.png'
-  }))
+    src: 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/64/Map-Marker-Marker-Outside-Chartreuse-icon.png'
+  })
 });
 
+iconFeature.setStyle(iconStyle);
+
+var vectorSource = new VectorSource({
+  features: [iconFeature]
+});
 
 var vectorLayer = new VectorLayer({
-  source: vectorSource,
-  style: iconStyle
+  source: vectorSource
 });
 
+var rasterLayer = new TileLayer({
+  source: new TileJSON({
+    url: 'https://a.tiles.mapbox.com/v3/aj.1x1-degrees.json',
+    crossOrigin: ''
+  })
+});
 
+var map = new Map({
+  layers: [rasterLayer, vectorLayer],
+  target: document.getElementById('osm_map'),
+  view: new View({
+    center: [0, 0],
+    zoom: 3
+  })
+});
 
+var element = document.getElementById('popup');
 
-const map = new Map({
-    target: 'osm_map',
-    layers: [vectorLayer],
+var popup = new Overlay({
+  element: element,
+  positioning: 'bottom-center',
+  stopEvent: false,
+  offset: [0, -50]
+});
+map.addOverlay(popup);
 
-    view: new View({
-        center: [0, 0],
-        zoom: 0
-    })
+// display popup on click
+map.on('click', function(evt) {
+  var feature = map.forEachFeatureAtPixel(evt.pixel,
+    function(feature) {
+      return feature;
+    });
+  if (feature) {
+    var coordinates = feature.getGeometry().getCoordinates();
+    popup.setPosition(coordinates);
+    $(element).popover({
+      placement: 'top',
+      html: true,
+      content: feature.get('name')
+    });
+    $(element).popover('show');
+  } else {
+    $(element).popover('destroy');
+  }
+});
+
+// change mouse cursor when over marker
+map.on('pointermove', function(e) {
+  if (e.dragging) {
+    $(element).popover('destroy');
+    return;
+  }
+  var pixel = map.getEventPixel(e.originalEvent);
+  var hit = map.hasFeatureAtPixel(pixel);
+  map.getTarget().style.cursor = hit ? 'pointer' : '';
 });
 
 }                                // <-- close the method
 };
+
+
 
 export default my_map;               // <-- and export the object

@@ -19,9 +19,14 @@ class WelcomeController extends Controller
         return view('pages.travel.index');
     }
 
+    // public function map()
+    // {
+    //     return view('pages.map.index');
+    // }
+
     public function map()
     {
-        return view('pages.map.index');
+        return view('pages.map.map-geolocation');
     }
 
 
