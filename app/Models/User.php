@@ -144,6 +144,8 @@ class User extends Authenticatable
         return false;
     }
 
+
+
     /**
      * Add/Attach a profile to a user.
      *

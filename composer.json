@@ -25,6 +25,7 @@
         "jeremykenedy/laravel-roles": "^3.0",
         "jeremykenedy/laravel2step": "^1.6",
         "jeremykenedy/uuid": "^3.1",
+        "jeroennoten/laravel-ckeditor": "^3.8",
         "laravel/framework": "^7.0",
         "laravel/helpers": "^1.2",
         "laravel/socialite": "^4.3",

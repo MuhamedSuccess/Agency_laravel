@@ -32,7 +32,7 @@ Route::group(['middleware' => ['web', 'checkblocked']], function () {
 //         'create' => '/trip/create',
 //     ],
 
-    
+
 // ]);
 
 
@@ -40,39 +40,97 @@ Route::group(['middleware' => ['web', 'checkblocked']], function () {
 Route::get('/trip/create', 'Trip\TripController@create')->name('trip/create');
 Route::post('/trip-create', 'Trip\TripController@store')->name('trip-create');
 
-Route::get('/trip/{id}', [    
+
+
+
+Route::get('/trip/{id}', [
+    'as' => 'trip.show',
     'uses' => 'Trip\TripController@show',
 ]);
+
+Route::post('comment/create', 'CommentController@store')->name('comments.store');
+
+// Route::get('/comments-display/{id}', 'CommentController@displayComments')->name('/comments-display');
+
+
+Route::get('/comments-display/{id}', [
+    'as' => '/comments-display',
+    'uses' => 'CommentController@displayComments',
+]);
+
+
+
+Route::get('/map-frame', function () {
+    return view('pages.map.geolocation-frame');
+});
+
+
+Route::get('/place-images', function () {
+    return view('pages.map.place-images');
+});
+
+
+
+//Notification routes
+Route::get('/notification-send', function () {
+    event(new App\Events\MyEvent('notification from laravel'));
+    return "Event has been sent!";
+});
+
+Route::get('/display', function () {
+    return view('pages.notifications.welcome');
+});
 
 
 
 // mail routes
 
-Route::get ( '/mail', function () {
-	return view ( 'pages.messanger.home' );
-} );
+Route::get('/mail', function () {
+    return view('pages.messanger.home');
+});
 
 // Route::get ( '/mail', function () {
 // 	return view ( 'pages.messanger.mail' );
 // } );
 
-Route::any ( 'sendemail', function () {
-    if (Request::get ( 'message' ) != null)
-        $data = array (
-                'bodyMessage' => Request::get ( 'message' ) 
+Route::any('sendemail', function () {
+    if (Request::get('message') != null)
+        $data = array(
+            'bodyMessage' => Request::get('message')
         );
     else
-        $data [] = '';
-    Mail::send ( 'pages.messanger.email', $data, function ($message) {
-        
-        $message->from ( 'ahmedadelfcih182@gmail.com', 'Just Laravel' );
-        
-        $message->to ( Request::get ( 'toEmail' ) )->subject ( 'Just Laravel demo email using SendGrid' );
-    } );
-    return Redirect::back ()->withErrors ( [ 
-            'Your email has been sent successfully' 
-    ] );
-} );
+        $data[] = '';
+    Mail::send('pages.messanger.email', $data, function ($message) {
+
+        $message->from('ahmedadelfcih182@gmail.com', 'Just Laravel');
+
+        $message->to(Request::get('toEmail'))->subject('Just Laravel demo email using SendGrid');
+    });
+    return Redirect::back()->withErrors([
+        'Your email has been sent successfully'
+    ]);
+});
+
+
+
+
+
+//Tourist Places Routes
+// Route::get ( '/attractions', function () {
+// 	return view ( 'pages.tourist_places.home' );
+// } );
+
+
+
+Route::resource('attractions', 'Attractions\AttractionsController', [
+    'names' => [
+        'index'   => 'attractions',
+        'destroy' => 'attraction.destroy',
+    ],
+    'except' => [
+        'deleted',
+    ],
+]);
 
 
 
@@ -189,6 +247,3 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
 });
 
 Route::redirect('/php', '/phpinfo', 301);
-
-
-

@@ -73,7 +73,8 @@ class ProfilesController extends Controller
             'currentTheme' => $currentTheme,
         ];
 
-        return view('profiles.show')->with($data);
+        // return view('profiles.show')->with($data);
+        return view('profiles.main')->with(compact($data) );
     }
 
     /**

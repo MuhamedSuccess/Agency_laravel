@@ -12,7 +12,7 @@ class Trip extends Model
 
 
 
-     /**
+    /**
      * Fillable fields for a فقهح.
      *
      * @var array
@@ -21,11 +21,15 @@ class Trip extends Model
         'name',
         'description',
         'trip_cover',
-        'days',        
+        'days',
         'date',
-        'trip_plan_id', 
+        'trip_plan_id',
         'guide_id',
-        'tourism_type_id'               
+        'tourism_type_id'
     ];
-    
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
+    }
 }

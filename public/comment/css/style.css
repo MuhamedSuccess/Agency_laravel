@@ -1,0 +1,43 @@
+.comment-section {
+    background: #ddd;
+    margin: 20px 0px 10px 0px;
+}
+
+img.img-responsive.img-circle {
+    width: 40px;
+    height: 40px;
+    margin: 30px 3px 0px 0px;
+    display: inline-grid;
+    /* margin: 0; */
+    padding: 0;
+}
+
+strong {
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.body {
+    margin: 0 0 10px 50px;
+}
+
+span#time_elapsed {
+    margin-left: 5px;
+    font-size: 13px;
+}
+
+#reply-section {
+    display: none;
+    margin-top: 12px;
+}
+
+#reply-section input.form-control {
+    margin: 0px 0px 10px 50px;
+}
+
+#reply-section .btn,
+#reply_btn {
+    margin: 0px 0px 10px 50px;
+    background-color: orange;
+}
