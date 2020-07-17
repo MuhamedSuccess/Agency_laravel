@@ -71,6 +71,9 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'gender',
+        'user_type',
+        'preferences',
         'activated',
         'token',
         'signup_ip_address',
@@ -90,6 +93,9 @@ class User extends Authenticatable
         'id'                                => 'integer',
         'first_name'                        => 'string',
         'last_name'                         => 'string',
+        'gender'                            => 'string',
+        'user_type'                         => 'string',
+        'preferences'                       => 'string',
         'email'                             => 'string',
         'password'                          => 'string',
         'activated'                         => 'boolean',
@@ -109,6 +115,15 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Social');
     }
+    public function trips()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(User::class);
+    }  
 
     /**
      * Get the profile associated with the user.
@@ -144,6 +159,8 @@ class User extends Authenticatable
         return false;
     }
 
+
+
     /**
      * Add/Attach a profile to a user.
      *
@@ -163,4 +180,6 @@ class User extends Authenticatable
     {
         return $this->profiles()->detach($profile);
     }
+
+
 }

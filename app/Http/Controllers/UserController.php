@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Trip;
+use App\places;
 
 use Auth;
 
@@ -30,7 +32,10 @@ class UserController extends Controller
             // return view('pages.admin.home'); dashboard
             return view('pages.admin.dashboard');
         }else{
-            return view('pages.user.home');
+            $trips = Trip::all();
+            $places = places::all();
+
+            return view('pages.travel.index')->with('trips', $trips)->with('places' , $places ) ;
 
         }
 
@@ -47,7 +52,8 @@ class UserController extends Controller
             return view('pages.admin.home'); 
             
         }else{
-            return view('pages.user.home');
+            $trips = Trip::all();
+            return view('pages.travel.index')->with('trips', $trips);
 
         }
 

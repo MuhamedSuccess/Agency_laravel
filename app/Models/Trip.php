@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\reservations;
 
 class Trip extends Model
 {
@@ -12,7 +13,7 @@ class Trip extends Model
 
 
 
-     /**
+    /**
      * Fillable fields for a فقهح.
      *
      * @var array
@@ -21,11 +22,32 @@ class Trip extends Model
         'name',
         'description',
         'trip_cover',
-        'days',        
+        'days',
         'date',
-        'trip_plan_id', 
+        'trip_plan_id',
         'guide_id',
-        'tourism_type_id'               
+        'tourism_type_id',
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
+    }
+
+    public function reservations()
+    {
+       return $this->hasMany(reservation::class);
+    }  
+
+    public function User()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
     
+    public function author_name()
+    {
+        
+        return $this->belongsTo(User::class,'author','id');
+    }
 }

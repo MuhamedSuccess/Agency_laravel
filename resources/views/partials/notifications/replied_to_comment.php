@@ -1,0 +1,3 @@
+<a href="http://">
+    {{$notification->data['user']['name']}} commented on your...
+</a>
