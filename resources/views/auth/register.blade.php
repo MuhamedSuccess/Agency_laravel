@@ -88,6 +88,47 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="gender" type="text" class="form-control" name="gender" required>
+                                    <option name="gender" value="">Select Gender</option>
+                                    <option name="gender" value="male">Male</option>
+                                    <option name="gender" value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="user_type" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="user_type" type="text" class="form-control" name="user_type" required>
+                                    <option name="user_type" value="">Select Type</option>
+                                    <option name="user_type" value="tourist">Tourist</option>
+                                    <option name="user_type" value="guide">Guide</option>
+                                </select>                            
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="preferences" class="col-md-4 col-form-label text-md-right">{{ __('preference Type') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="preferences" type="text" class="form-control" name="preferences" required>
+                                    <option name="preferences" value="">Select Type</option>
+                                    <option name="preferences" value="Adventure">Adventure</option>
+                                    <option name="preferences" value="Camping">Camping</option>
+                                    <option name="preferences" value="Cultural">Cultural</option>
+                                    <option name="preferences" value="Medical">Medical</option>
+                                    <option name="preferences" value="Religious">Religious</option>
+                                    <option name="preferences" value="Sports">Sports</option>
+                                    <option name="preferences" value="Recreational">Recreational</option>
+                                    <option name="preferences" value="Nature">Nature</option>
+                                </select>                            
+                            </div>
+                        </div>
 
 
                         @if(config('settings.reCaptchStatus'))

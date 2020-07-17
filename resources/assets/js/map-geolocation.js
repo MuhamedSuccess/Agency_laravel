@@ -7,7 +7,7 @@ import Point from 'ol/geom/Point';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 import {OSM, Vector as VectorSource} from 'ol/source';
 import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style';
-
+import {Icon} from 'ol/style';
 
 var map_geolocation = {                       // <-- add this line to declare the object
     display: function () {   
@@ -66,16 +66,12 @@ geolocation.on('change:accuracyGeometry', function() {
 
 var positionFeature = new Feature();
 positionFeature.setStyle(new Style({
-  image: new CircleStyle({
-    radius: 6,
-    fill: new Fill({
-      color: '#3399CC'
-    }),
-    stroke: new Stroke({
-      color: '#fff',
-      width: 2
-    })
-  })
+    image: new Icon({
+        anchor: [0.5, 46],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+        src: 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/64/Map-Marker-Marker-Outside-Chartreuse-icon.png'
+      })
 }));
 
 geolocation.on('change:position', function() {

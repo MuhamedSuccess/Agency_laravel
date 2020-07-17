@@ -19,8 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['web', 'checkblocked']], function () {
     Route::get('/', 'WelcomeController@welcome')->name('welcome');
     Route::get('/trip', 'Trip\TripController@homepage')->name('trip');
+    
     Route::get('/terms', 'TermsController@terms')->name('terms');
     Route::get('/map', 'WelcomeController@map')->name('map');
+    Route::get('/trip-management', 'Trip\TripController@manage')->name('trip-management');
 });
 
 
@@ -32,18 +34,134 @@ Route::group(['middleware' => ['web', 'checkblocked']], function () {
 //         'create' => '/trip/create',
 //     ],
 
-    
+
 // ]);
+
+
+
+Route::resource('customsearch', 'CustomSearchController');
+Route::resource('TripSearch', 'TripSearchController');
+
+Route::get('places', 'placesController@index');
+Route::post('addplace', 'placesController@store')->name('addplace');
+Route::get('fetchplaces', 'placesController@display');
+Route::get('/editplace/{id}', 'placesController@edit');
+Route::put('/updateplace/{id}', 'placesController@update');
+Route::get('/deleteplace/{id}', 'placesController@delete');
+Route::get('/place/{id}', 'placesController@show');
+
+
+Route::get('/allreservation', 'reservecontroller@allreservation');
+Route::get('/userreservation', 'reservecontroller@userreservation');
+
+
+Route::get('/trip/reserve/{id}', 'reservecontroller@index');
+Route::post('/confirm/{id}', 'reservecontroller@confirm');
+Route::get('/deletereserve/{id}', 'reservecontroller@delete');
+
+
+
+
+
+Route::get('/laravel_google_chart', 'LaravelGoogleGraph@index');
+Route::get('/laravel_google_chart2', 'LaravelGoogleGraph2@index');
+Route::get('/laravel_google_chart3', 'LaravelGoogleGraph3@index');
+
+
 
 
 //trip routes
 Route::get('/trip/create', 'Trip\TripController@create')->name('trip/create');
 Route::post('/trip-create', 'Trip\TripController@store')->name('trip-create');
 
-Route::get('/trip/{id}', [    
+
+
+
+Route::get('/trip/{id}', [
+    'as' => 'trip.show',
     'uses' => 'Trip\TripController@show',
 ]);
 
+Route::delete('/trip/{id}', [
+    'as' => 'trip.delete',
+    'uses' => 'Trip\TripController@delete',
+]);
+
+Route::post('comment/create', 'CommentController@store')->name('comments.store');
+
+
+
+Route::get('/map-frame', function () {
+    return view('pages.map.geolocation-frame');
+});
+
+
+Route::get('/place-images', function () {
+    return view('pages.map.place-images');
+});
+
+
+
+//Notification routes
+Route::get('/notification-send', function () {
+    event(new App\Events\MyEvent('notification from laravel'));
+    return "Event has been sent!";
+});
+
+Route::get('/display', function () {
+    return view('pages.notifications.welcome');
+});
+
+
+
+// mail routes
+
+Route::get('/mail', function () {
+    return view('pages.messanger.home');
+});
+
+// Route::get ( '/mail', function () {
+// 	return view ( 'pages.messanger.mail' );
+// } );
+
+Route::any('sendemail', function () {
+    if (Request::get('message') != null)
+        $data = array(
+            'bodyMessage' => Request::get('message')
+        );
+    else
+        $data[] = '';
+    Mail::send('pages.messanger.email', $data, function ($message) {
+
+        $message->from('ahmedadelfcih182@gmail.com', 'Just Laravel');
+
+        $message->to(Request::get('toEmail'))->subject('Just Laravel demo email using SendGrid');
+    });
+    return Redirect::back()->withErrors([
+        'Your email has been sent successfully'
+    ]);
+});
+
+
+
+
+
+//Tourist Places Routes
+// Route::get ( '/attractions', function () {
+// 	return view ( 'pages.tourist_places.home' );
+// } );
+
+
+
+Route::resource('attractions', 'Attractions\AttractionsController', [
+    'names' => [
+        'index'   => 'attractions',
+        'destroy' => 'attraction.destroy',
+    ],
+    'except' => [
+        'deleted',
+    ],
+]);
 
 
 
@@ -160,6 +278,3 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
 });
 
 Route::redirect('/php', '/phpinfo', 301);
-
-
-

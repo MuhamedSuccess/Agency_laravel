@@ -11,6 +11,7 @@ class WelcomeController extends Controller
      */
     public function welcome()
     {
+        // return "welcome";
         return redirect('trip');        
     }
 
@@ -27,6 +28,12 @@ class WelcomeController extends Controller
     public function map()
     {
         return view('pages.map.map-geolocation');
+    }
+
+
+    public function mail()
+    {
+        return view('pages.mail.map-geolocation');
     }
 
 

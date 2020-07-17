@@ -9,7 +9,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\UserSession;
 class Authenticate extends Middleware
 {
     /**
@@ -60,6 +60,9 @@ class Authenticate extends Middleware
                 ->with('message', 'Please login.');
         }
 
+        $session = new UserSession();
+        $session->user_id = \Auth::user()->id;
+        $session->save();
         return $next($request);
     }
 
