@@ -5,7 +5,6 @@ use App\Models\Trip;
 use App\places;
 
 use App\Models\Guide;
-use App\Models\Trip;
 use App\Models\User;
 use Auth;
 use Barryvdh\DomPDF\Facade as PDF;
