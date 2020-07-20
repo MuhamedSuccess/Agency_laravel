@@ -26,28 +26,28 @@ class Trip extends Model
         'date',
         'trip_plan_id',
         'guide_id',
-        'tourism_type_id',
+        'tourism_type_id'
     ];
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 
     public function comments()
     {
         return $this->hasMany(Comment::class)->whereNull('parent_id');
     }
 
-    public function reservations()
-    {
-       return $this->hasMany(reservation::class);
-    }  
-
     public function User()
     {
         return $this->belongsTo(User::class,'user_id','id');
     }
 
-    
+
     public function author_name()
     {
-        
+
         return $this->belongsTo(User::class,'author','id');
     }
 }

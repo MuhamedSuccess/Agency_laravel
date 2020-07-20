@@ -120,11 +120,6 @@ class User extends Authenticatable
         return $this->hasMany(User::class);
     }
 
-    public function reservations()
-    {
-        return $this->hasMany(User::class);
-    }  
-
     /**
      * Get the profile associated with the user.
      */
@@ -181,5 +176,8 @@ class User extends Authenticatable
         return $this->profiles()->detach($profile);
     }
 
-
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

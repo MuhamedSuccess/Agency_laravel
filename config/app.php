@@ -178,6 +178,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         \SocialiteProviders\Manager\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -235,6 +236,7 @@ return [
         'Gravatar'      => Creativeorange\Gravatar\Facades\Gravatar::class,
         'Image'         => Intervention\Image\Facades\Image::class,
         'Uuid'          => Webpatser\Uuid\Uuid::class,
+        'PDF'           => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

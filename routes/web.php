@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['web', 'checkblocked']], function () {
     Route::get('/', 'WelcomeController@welcome')->name('welcome');
     Route::get('/trip', 'Trip\TripController@homepage')->name('trip');
-    
+
     Route::get('/terms', 'TermsController@terms')->name('terms');
     Route::get('/map', 'WelcomeController@map')->name('map');
     Route::get('/trip-management', 'Trip\TripController@manage')->name('trip-management');
@@ -73,7 +73,6 @@ Route::get('/laravel_google_chart3', 'LaravelGoogleGraph3@index');
 //trip routes
 Route::get('/trip/create', 'Trip\TripController@create')->name('trip/create');
 Route::post('/trip-create', 'Trip\TripController@store')->name('trip-create');
-
 
 
 
@@ -253,6 +252,7 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
             'index', 'show', 'update', 'destroy',
         ],
     ]);
+    Route::get('users/activity', 'UserController@activity')->name('users.activity');
 
     Route::resource('users', 'UsersManagementController', [
         'names' => [

@@ -27,8 +27,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
-    
-    
+
+
 
    <style>
     #weatherWidget .currentDesc {
@@ -104,11 +104,11 @@
 
                     <a class="dropdown-item {{ Request::is('themes','themes/create') ? 'active' : null }}" href="{{ url('/themes') }}">
                         {!! trans('titles.adminThemesList') !!}
-                    </a>            
+                    </a>
 
                     <a class="dropdown-item {{ Request::is('routes') ? 'active' : null }}" href="{{ url('/routes') }}">
                         {!! trans('titles.adminRoutes') !!}
-                    </a>                
+                    </a>
 
                     <li class="menu-item-has-children dropdown">
                         <a href="{{route('users')}}" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>User Management</a>
@@ -170,6 +170,12 @@
                             <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
                             <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
                             <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-area-chart"></i>Reports</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-download"></i><a href="{{ route('users.activity') }}">Download Report</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -305,7 +311,7 @@
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
-            <!-- Animated -->            
+            <!-- Animated -->
             @yield('content')
             <!-- .animated -->
         </div>
@@ -330,7 +336,7 @@
 
     <!-- Scripts -->
 
-    
+
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
