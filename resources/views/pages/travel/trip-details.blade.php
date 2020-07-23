@@ -6,24 +6,24 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
         <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    
+
 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
         {{-- CSRF Token --}}
         <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
         <title>@hasSection('template_title')@yield('template_title') | @endif
             {{ config('app.name', Lang::get('titles.app')) }}</title>
         <meta name="description" content="">
         <meta name="author" content="Jeremy Kenedy">
         <!-- <link rel="shortcut icon" href="/favicon.ico"> -->
-    
+
         <!-- Facebook and Twitter integration -->
         <meta property="og:title" content="" />
         <meta property="og:image" content="" />
@@ -34,13 +34,13 @@
         <meta name="twitter:image" content="" />
         <meta name="twitter:url" content="" />
         <meta name="twitter:card" content="" />
-    
-    
+
+
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <link rel="shortcut icon" href="favicon.ico">
-    
+
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-    
+
         <!-- Animate.css -->
         <link rel="stylesheet" href="{{ asset('travel/css/animate.css') }}">
         <!-- Icomoon Icon Fonts-->
@@ -56,13 +56,13 @@
         <!-- CS Select -->
         <link rel="stylesheet" href="{{ asset('travel/css/cs-select.css') }}">
         <link rel="stylesheet" href="{{ asset('travel/css/cs-skin-border.css') }}">
-    
+
         <link rel="stylesheet" href="{{ asset('travel/css/style.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-        
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -114,13 +114,13 @@
                 <div class="row">
                     <h2>Trip Details !</h2>
                 </div>
-                
+
                 <div class="block">
                   <div class="row">
                     <div class="span4"  data-animate-effect="fadeIn">
-                        <img src="{{ asset('uploads/trips/'.$trip->trip_cover ) }}" alt="image" class="img-left" width="100%" height="100%" >                     
+                        <img src="{{ asset('uploads/trips/'.$trip->trip_cover ) }}" alt="image" class="img-left" width="100%" height="100%" >
                       <p></p>
-                      
+
                     </div>
 
                     <div class="card-body" style="width: 85% ; ">
@@ -139,7 +139,7 @@
                         $description =  htmlspecialchars_decode($trip['description']);
                         echo $description;
                     ?>
-                                <!-- {{$trip->description }}--></td> 
+                                <!-- {{$trip->description }}--></td>
                               </tr>
                               <tr>
                                 <td> <strong>Days</strong> </td>
@@ -147,7 +147,7 @@
                               </tr>
                            <tr>
                            <td>
-                                          
+
                                           @if ($trip->status== 'available')
                                               @php $badgeClass = 'primary' @endphp
                                           @elseif ($trip->status == 'complete')
@@ -158,19 +158,26 @@
                                               @php $badgeClass = 'default' @endphp
                                           @endif
                                           <span class="badge badge-{{$badgeClass}}">{{ $trip->status }}</span>
-                                    
+
                                   </td>
                            </tr>
                               <tr>
-                                 <td></td> 
+                                 <td></td>
                                 <td class="text-center">
                                 @if($trip->status== 'available')
                                     <a class="btn btn-success" href="/trip/reserve/{{$trip->id}}">Reserve trip<i class="icon-arrow-right22"></i></a>
-                                @endif    
+                                @endif
                                 </td>
                               </tr>
                             </tbody>
                           </table>
+                          @if( $trip->lat != 0 && $trip->lng != 0 )
+                            <div class="row">
+                              <div class="col-md-3"></div>
+                              <div class="col-md-6" id="map-canvas" style="margin: 0;padding: 0;height:300px;width:700px"></div>
+                            </div>
+                          @endif
+
 
                     </div>
 
@@ -191,15 +198,15 @@
                     @include('comment.commentsDisplay', ['comments' => $comments, 'trip_id' => $trip->id])
                     <hr />
                     @include('comment.add-comment')
-                    
+
                 </div>
 
                 </div>
-        
-           
+
+
                  </div>
                 </div>
-                
+
             </div>
 
             <br><br><br><br><br><br><br><br><br><br>
@@ -217,7 +224,7 @@
 
     <script src="{{asset('comment/js/main.js')}}"></script>
 
-      
+
       <!-- rating.js file -->
       <script src="js/addons/rating.js"></script>
     {{-- <script src="{{asset('nav-filter/js/jquery-ui.js')}}"></script> --}}
@@ -281,6 +288,46 @@
         });
 
     </script> --}}
+
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+  <script>
+     var map;
+     var markersArray=[];
+     function initialize() {
+      var mapOptions = {
+          zoom: 8,
+          center: new google.maps.LatLng({{$trip->lat}}, {{$trip->lng}}),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+     map = new google.maps.Map(document.getElementById('map-canvas'),
+     mapOptions);
+
+     deleteOverlays();
+     var marker = new google.maps.Marker({
+            map: map,
+            position: {
+              lat: {{$trip->lat}},
+              lng: {{$trip->lng}}
+            },
+        });
+     markersArray.push(marker);
+
+
+
+     function deleteOverlays() {
+       if (markersArray) {
+          for (i in markersArray) {
+           markersArray[i].setMap(null);
+          }
+        markersArray.length = 0;
+      }
+     }
+   }
+
+     google.maps.event.addDomListener(window, 'load', initialize);
+
+
+  </script>
 
 </body>
 

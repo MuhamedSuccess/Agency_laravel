@@ -27,6 +27,8 @@ class Trip extends Model
         'trip_plan_id',
         'guide_id',
         'tourism_type_id',
+        'lat',
+        'lng',
     ];
 
     public function comments()
@@ -37,17 +39,17 @@ class Trip extends Model
     public function reservations()
     {
        return $this->hasMany(reservation::class);
-    }  
+    }
 
     public function User()
     {
         return $this->belongsTo(User::class,'user_id','id');
     }
 
-    
+
     public function author_name()
     {
-        
+
         return $this->belongsTo(User::class,'author','id');
     }
 }

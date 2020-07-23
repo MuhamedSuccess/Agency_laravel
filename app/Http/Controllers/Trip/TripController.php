@@ -48,9 +48,9 @@ class TripController extends Controller
         $guide =  Guide::all();
         // $authors = DB::select('select DISTINCT * from users INNER JOIN trip
         // ON trip.author = users.id
-        // GROUP BY users.name'); 
+        // GROUP BY users.name');
 
-        $places = DB::select('SELECT * FROM places name ORDER BY 
+        $places = DB::select('SELECT * FROM places name ORDER BY
         name asc');
 
 
@@ -71,7 +71,7 @@ class TripController extends Controller
                 'trip_plans' => $plans,
                 'tourism_types' => $tourism_types,
                 'tourist_places' => $places,
-                
+
             ]
         );
 
@@ -92,8 +92,8 @@ class TripController extends Controller
         // echo $data->input();
 
 
-
-        print_r($request->input());
+        return $request->all();
+        // print_r($request->input());
         if ($request->hasFile('cover')) {
             $file = $request->file('cover');
             // Get filename with the extension
@@ -108,7 +108,7 @@ class TripController extends Controller
             //$path = $request->file('cover')->storeAs('../public/trip/cover_images', $fileNameToStore);
             $file->move('uploads/trips/',$fileNameToStore);
             $trip = new Trip();
-            $trip->trip_cover = $fileNameToStore ; 
+            $trip->trip_cover = $fileNameToStore ;
 
 
 
@@ -121,7 +121,7 @@ class TripController extends Controller
             $trip->author = \Auth::user()->id;
             // $trip->date = date('Y-m-d H:i:s');
             $trip->date = date('Y-m-d', strtotime($request->input('date')));
-            
+
 
             $trip->adult = $request->input('adults');
             $trip->children = $request->input('childrens');
@@ -158,7 +158,7 @@ class TripController extends Controller
     public function manage()
     {
         $trips = Trip::all();
-        
+
 
         return view('pages.travel.manage-trip')->with('trips', $trips );
     }
@@ -168,7 +168,7 @@ class TripController extends Controller
 
 
         $trip = Trip::find($id);
-        
+
 
         // $profile = Profile::where('user_id', $user->id)->first();
         // $comments = Comment::where('user_id', $user->id)->where(function ($query) {
