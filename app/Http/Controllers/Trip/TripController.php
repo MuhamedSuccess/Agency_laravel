@@ -92,7 +92,7 @@ class TripController extends Controller
         // echo $data->input();
 
 
-        return $request->all();
+        // return $request->all();
         // print_r($request->input());
         if ($request->hasFile('cover')) {
             $file = $request->file('cover');
@@ -118,20 +118,23 @@ class TripController extends Controller
             $trip->name = $request->input('name');
             $trip->description = $request->input('description');
             $trip->days = $request->input('days');
-            $trip->author = \Auth::user()->id;
+            // $trip->author = \Auth::user()->id;      // commented by badawy
             // $trip->date = date('Y-m-d H:i:s');
-            $trip->date = date('Y-m-d', strtotime($request->input('date')));
+            // $trip->date = date('Y-m-d', strtotime($request->input('date')));  // commented by badawy
 
 
-            $trip->adult = $request->input('adults');
-            $trip->children = $request->input('childrens');
-            $trip->senior = $request->input('seniors');
+            // $trip->adult = $request->input('adults');  // commented by badawy
+            // $trip->children = $request->input('childrens');  // commented by badawy
+            // $trip->senior = $request->input('seniors');  // commented by badawy
 
             //$trip->trip_cover = $fileNameToStore;
             $trip->guide_id = $request->input('guide');
             $trip->trip_plan_id = $request->input('trip_plan');
             $trip->tourism_type_id = $request->input('tourim_type');
-            $trip->place = $request->input('tourist_place');
+            // $trip->place = $request->input('tourist_place');  // commented by badawy
+
+            $trip->lat = $request->input('lat');
+            $trip->lng = $request->input('lng');
 
             // $trip = Trip::create(
             //     [
