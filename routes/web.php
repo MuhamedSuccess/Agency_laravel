@@ -57,6 +57,7 @@ Route::get('/userreservation', 'reservecontroller@userreservation');
 
 Route::get('/trip/reserve/{id}', 'reservecontroller@index');
 Route::post('/confirm/{id}', 'reservecontroller@confirm');
+Route::get('/reservationdetails/{id}', 'reservecontroller@getreservationDetails');
 Route::get('/deletereserve/{id}', 'reservecontroller@delete');
 
 

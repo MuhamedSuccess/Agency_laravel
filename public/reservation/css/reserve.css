@@ -61,13 +61,16 @@
 }
 
 @media (min-width: 576px)
-.css-fg70dr {
-    display: block;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
+{
+    .css-fg70dr {
+        display: block;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
 }
+
 
 .css-efqvk9 {
     -webkit-box-flex: 1;

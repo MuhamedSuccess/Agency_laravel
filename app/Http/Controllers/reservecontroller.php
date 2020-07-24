@@ -65,14 +65,66 @@ class reservecontroller extends Controller
         $reserve->number = $request->input('number');
         $reserve->phone = $request->input('phone');
 
+        $reserve->adult = $request->get('adults');
+        $reserve->child = $request->get('childs');
+        $reserve->senior = $request->get('senior');
+
+        $package = $request->get('package');
+        $reserve->cost = $this->calcPrice($package, $id);
 
         $reserve->save();
         $reserve = reservation::All();
         $users = User::all();
         $trip = trip::find($id);
   
-        return view('reservations',compact('reserve','users','trip'));
+        return response()->json(['success'=>'You are accepted in this trip', 'trip'=> $trip]);
+
+        // return view('reservations',compact('reserve','users','trip'));
     }
+    }
+
+
+    public function calcPrice($package, $id)
+    {
+        $trip = DB::select('select * from trip where id='.$id.'');
+
+
+        
+// Example 1
+// $pizza  = "3xadult+2xchild+2xsenior";
+$pieces = explode("+", $package);
+$arr = [];
+$arr_cost = ["adult"=>$trip->adult, "child"=>$trip->child, "senior"=>$trip->senior];
+
+for($i=0; $i<3; $i++)
+{
+	$unit_cost = explode("x", $pieces[$i]);
+	$left = $unit_cost[0];
+	$right = $unit_cost[1];
+	$arr[$i] = $left * $arr_cost[$right];	
+}
+
+// print_r($arr);
+
+$totoal_cost = $arr[0]+$arr[1]+ $arr[2];
+
+DB::insert('insert into pricing (package, trip_id, currency ,cost) values (?, ?, ?, ?)', [$package, $id, 'dollar', $totoal_cost]);
+
+
+
+return $totoal_cost;
+
+
+
+    }
+
+
+    public function getreservationDetails($id){
+        $trip = DB::select('select * from trip where id='.$id.'');
+        $pricing = DB::select('select * from pricing where trip_id='.$id.'');
+
+        return response()->json(['trip'=> $trip, 'pricing' => $pricing]);
+
     }
 
     public function delete($id)

@@ -36,7 +36,7 @@ class TripController extends Controller
         $trips = Trip::all();
         $places = places::all();
 
-        return view('pages.travel.index')->with('trips', $trips )->with('places' , $places ) ;
+        return view('pages.travel.index', compact('trips','places'));
 
     }
 
