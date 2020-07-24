@@ -36,7 +36,7 @@ class TripController extends Controller
         $trips = Trip::all();
         $places = places::all();
 
-        return view('pages.travel.index')->with('trips', $trips )->with('places' , $places ) ;
+        return view('pages.travel.index', compact('trips','places'));
 
     }
 
@@ -48,9 +48,9 @@ class TripController extends Controller
         $guide =  Guide::all();
         // $authors = DB::select('select DISTINCT * from users INNER JOIN trip
         // ON trip.author = users.id
-        // GROUP BY users.name');
+        // GROUP BY users.name'); 
 
-        $places = DB::select('SELECT * FROM places name ORDER BY
+        $places = DB::select('SELECT * FROM places name ORDER BY 
         name asc');
 
 
@@ -71,7 +71,7 @@ class TripController extends Controller
                 'trip_plans' => $plans,
                 'tourism_types' => $tourism_types,
                 'tourist_places' => $places,
-
+                
             ]
         );
 
@@ -92,8 +92,8 @@ class TripController extends Controller
         // echo $data->input();
 
 
-        // return $request->all();
-        // print_r($request->input());
+
+        print_r($request->input());
         if ($request->hasFile('cover')) {
             $file = $request->file('cover');
             // Get filename with the extension
@@ -108,7 +108,7 @@ class TripController extends Controller
             //$path = $request->file('cover')->storeAs('../public/trip/cover_images', $fileNameToStore);
             $file->move('uploads/trips/',$fileNameToStore);
             $trip = new Trip();
-            $trip->trip_cover = $fileNameToStore ;
+            $trip->trip_cover = $fileNameToStore ; 
 
 
 
@@ -118,23 +118,20 @@ class TripController extends Controller
             $trip->name = $request->input('name');
             $trip->description = $request->input('description');
             $trip->days = $request->input('days');
-            // $trip->author = \Auth::user()->id;      // commented by badawy
+            $trip->author = \Auth::user()->id;
             // $trip->date = date('Y-m-d H:i:s');
-            // $trip->date = date('Y-m-d', strtotime($request->input('date')));  // commented by badawy
+            $trip->date = date('Y-m-d', strtotime($request->input('date')));
+            
 
-
-            // $trip->adult = $request->input('adults');  // commented by badawy
-            // $trip->children = $request->input('childrens');  // commented by badawy
-            // $trip->senior = $request->input('seniors');  // commented by badawy
+            $trip->adult = $request->input('adults');
+            $trip->children = $request->input('childrens');
+            $trip->senior = $request->input('seniors');
 
             //$trip->trip_cover = $fileNameToStore;
             $trip->guide_id = $request->input('guide');
             $trip->trip_plan_id = $request->input('trip_plan');
             $trip->tourism_type_id = $request->input('tourim_type');
-            // $trip->place = $request->input('tourist_place');  // commented by badawy
-
-            $trip->lat = $request->input('lat');
-            $trip->lng = $request->input('lng');
+            $trip->place = $request->input('tourist_place');
 
             // $trip = Trip::create(
             //     [
@@ -161,7 +158,7 @@ class TripController extends Controller
     public function manage()
     {
         $trips = Trip::all();
-
+        
 
         return view('pages.travel.manage-trip')->with('trips', $trips );
     }
@@ -171,7 +168,7 @@ class TripController extends Controller
 
 
         $trip = Trip::find($id);
-
+        
 
         // $profile = Profile::where('user_id', $user->id)->first();
         // $comments = Comment::where('user_id', $user->id)->where(function ($query) {
