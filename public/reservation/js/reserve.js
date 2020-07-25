@@ -49,6 +49,7 @@ function confirmDetails(id, response) {
 
 }
 
+//save reservation data in database
 function formHandler() {
     var id = $("#trip_id").val();
 
@@ -77,7 +78,7 @@ function formHandler() {
 
 
         $.ajax({
-            url: '/confirm/' + id,
+            url: '/confirm/' + id, //trip id
             type: 'POST',
             dataType: 'json',
             data: {
@@ -120,6 +121,32 @@ function displayResult(data) {
 
 }
 
+function displayConfirmation(){
+    getReservation
+
+    $.ajax({
+        url: '/confirm/' + id,
+        type: 'POST',
+        dataType: 'json',
+        data: {
+
+            'adults': parseInt($("#cost0").text()),
+            'childs': parseInt($("#cost1").text()),
+            'senior': parseInt($("#cost2").text()),
+            // 'package':
+            // 'package': parseInt(adults) + "xadult+" + parseInt(childs) + "xchild+" + parseInt(senior) + "xsenior"
+        },
+
+        success: function (result) {
+            var data = result;
+            var id = $("#trip_id").val();
+            confirmDetails(parseInt(id), data);
+            console.log(result);
+
+
+        }
+    });
+}
 
 // function fetchData(data) {
 

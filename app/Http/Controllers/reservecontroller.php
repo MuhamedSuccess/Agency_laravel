@@ -42,10 +42,58 @@ class reservecontroller extends Controller
 
     }
 
+    public function getReservationData(Request $request, $id)
+    {
+        $trip = Trip::find($id);
+
+        $user_id = Auth::user()->id;
+        if (reservation::where('user_id', '=', $user_id)->
+            where('trip_id', '=', $id)->count() > 0) {
+            echo "<script>alert('You have already reserved this trip !');</script>";
+            $reserve = reservation::All();
+            $users = User::all();
+            $trip = trip::find($id);
+            return view('reservations', compact('reserve', 'users', 'trip'));;
+        } else {
+
+            if (request()->ajax()) {
+
+
+
+
+                $adult = $request->adults;
+                $child = $request->childs;
+                $senior = $request->senior;
+
+                $package = array($request->adults, $request->childs, $request->senior); //quantity of each of them
+                $number = array_sum($package); //number of tourists
+
+                $cost = $this->calcPrice($package, $id); //total cost
+
+
+
+                return response()->json(
+                    ['success' => 'You are accepted in this trip',
+                        'trip' => $trip,
+                        'cost' => $cost
+                    ]);
+
+            } else {
+
+                return response()->json(['error' => 'json data is missing']);
+
+            }
+
+
+            // return view('reservations',compact('reserve','users','trip'));
+        }
+
+    }
+
     public function confirm(Request $request, $id)
     {
 
-        $trip = trip::find($id);
+        $trip = Trip::find($id);
 
         $user_id = Auth::user()->id;
         if (reservation::where('user_id', '=', $user_id)->
@@ -139,13 +187,27 @@ class reservecontroller extends Controller
 
     }
 
+    public function getReservation($id){
+        $reservation = reservation::find(id);
+        if(!empty($reservation)){
+            return response()->json(['reserve' => $reserve]);
+        }
+    }
 
     public function getreservationDetails($id)
     {
-        $trip = DB::select('select * from trip where id=' . $id . '');
-        $pricing = DB::select('select * from pricing where trip_id=' . $id . '');
+//        $trip = DB::select('select * from trip where id=' . $id . '');
+//        $pricing = DB::select('select * from pricing where trip_id=' . $id . '');
+        $reservation = reservation::find($id);
 
-        return response()->json(['trip' => $trip, 'pricing' => $pricing]);
+        if(!empty($reservation)){
+            return response()->json(['reserve' => $reserve]);
+        }else{
+            return response()->json(['error' => 'json data is missing']);
+
+        }
+
+//        return response()->json(['trip' => $trip, 'pricing' => $pricing]);
 
     }
 

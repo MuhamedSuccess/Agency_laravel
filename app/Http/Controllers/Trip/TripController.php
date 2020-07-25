@@ -48,9 +48,9 @@ class TripController extends Controller
         $guide =  Guide::all();
         // $authors = DB::select('select DISTINCT * from users INNER JOIN trip
         // ON trip.author = users.id
-        // GROUP BY users.name'); 
+        // GROUP BY users.name');
 
-        $places = DB::select('SELECT * FROM places name ORDER BY 
+        $places = DB::select('SELECT * FROM places name ORDER BY
         name asc');
 
 
@@ -71,7 +71,7 @@ class TripController extends Controller
                 'trip_plans' => $plans,
                 'tourism_types' => $tourism_types,
                 'tourist_places' => $places,
-                
+
             ]
         );
 
@@ -108,7 +108,7 @@ class TripController extends Controller
             //$path = $request->file('cover')->storeAs('../public/trip/cover_images', $fileNameToStore);
             $file->move('uploads/trips/',$fileNameToStore);
             $trip = new Trip();
-            $trip->trip_cover = $fileNameToStore ; 
+            $trip->trip_cover = $fileNameToStore ;
 
 
 
@@ -121,10 +121,10 @@ class TripController extends Controller
             $trip->author = \Auth::user()->id;
             // $trip->date = date('Y-m-d H:i:s');
             $trip->date = date('Y-m-d', strtotime($request->input('date')));
-            
+
 
             $trip->adult = $request->input('adults');
-            $trip->children = $request->input('childrens');
+            $trip->child = $request->input('childrens');
             $trip->senior = $request->input('seniors');
 
             //$trip->trip_cover = $fileNameToStore;
@@ -132,6 +132,9 @@ class TripController extends Controller
             $trip->trip_plan_id = $request->input('trip_plan');
             $trip->tourism_type_id = $request->input('tourim_type');
             $trip->place = $request->input('tourist_place');
+
+            $trip->lat = $request->input('lat');
+            $trip->lng = $request->input('lng');
 
             // $trip = Trip::create(
             //     [
@@ -158,7 +161,7 @@ class TripController extends Controller
     public function manage()
     {
         $trips = Trip::all();
-        
+
 
         return view('pages.travel.manage-trip')->with('trips', $trips );
     }
@@ -168,7 +171,7 @@ class TripController extends Controller
 
 
         $trip = Trip::find($id);
-        
+
 
         // $profile = Profile::where('user_id', $user->id)->first();
         // $comments = Comment::where('user_id', $user->id)->where(function ($query) {

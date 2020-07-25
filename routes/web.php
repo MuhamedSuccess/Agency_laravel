@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['web', 'checkblocked']], function () {
     Route::get('/', 'WelcomeController@welcome')->name('welcome');
     Route::get('/trip', 'Trip\TripController@homepage')->name('trip');
-    
+
     Route::get('/terms', 'TermsController@terms')->name('terms');
     Route::get('/map', 'WelcomeController@map')->name('map');
     Route::get('/trip-management', 'Trip\TripController@manage')->name('trip-management');
@@ -59,7 +59,7 @@ Route::get('/trip/reserve/{id}', 'reservecontroller@index');
 Route::post('/confirm/{id}', 'reservecontroller@confirm');
 Route::get('/reservationdetails/{id}', 'reservecontroller@getreservationDetails');
 Route::get('/deletereserve/{id}', 'reservecontroller@delete');
-
+//getReservation
 
 
 
