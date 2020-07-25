@@ -69,20 +69,26 @@ class UserController extends Controller
     {
         $maxUser = 0;
         $maxGuide = 0;
+        $maxUserId =0;
+        $maxGuideId = 0; 
         foreach (User::all() as $user) {
             if ($user->reservations()->count() > $maxUser) {
-                $maxUser = $user->id;
+                $maxUser = $user->reservations()->count();
+                $maxUserId = $user->id;
             }
         }
         foreach (Guide::all() as $guide) {
             if ($guide->reservations()->count() > $maxGuide) {
-                $maxGuide = $guide->id;
+                $maxGuide = $guide->reservations()->count();
+                $maxGuideId = $guide->id;
             }
         }
         $maxUsers = [];
-        array_push($maxUsers, $maxUser);
+        if($maxUserId != 0)
+            array_push($maxUsers, $maxUserId);
         $maxGuides = [];
-        array_push($maxGuides, $maxGuide);
+        if($maxGuideId != 0)
+            array_push($maxGuides, $maxGuideId);
         $maxUser = User::find($maxUsers);
         $maxGuide = Guide::find($maxGuides);
         $topTrips = Trip::find($this->topTrips());
