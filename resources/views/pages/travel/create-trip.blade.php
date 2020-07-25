@@ -81,7 +81,7 @@
                                 <!-- <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i> -->
                             </div>
                         </div>
-                        
+
                         <div class="col-2">
                             <div class="input-group">
                                 <input class="input--style-2" type="number" placeholder="senior cost" id="days" name="seniors">
@@ -150,7 +150,6 @@
 
         $("#submit").click(function(e){
             e.preventDefault();
-
             $.ajax({
                 url: "{{url('/trip/create')}}",
 method: 'POST',
