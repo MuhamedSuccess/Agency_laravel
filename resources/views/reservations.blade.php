@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
 
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
@@ -24,14 +23,14 @@
         <form id="msform">
             <!-- progressbar -->
 
-            <?php
+        <?php
 
-if (isset($trip->id)) {
-    echo '<input type="hidden" name="ans1" id="trip_id" value="'.$trip->id.'"/>';
+        if (isset($trip->id)) {
+            echo '<input type="hidden" name="ans1" id="trip_id" value="' . $trip->id . '"/>';
 
- }
-            ?>
-            <!-- <input type="hidden" id="trip_id" value="{{$trip->id}}"> -->
+        }
+        ?>
+        <!-- <input type="hidden" id="trip_id" value="{{$trip->id}}"> -->
 
             <ul id="progressbar">
                 <li class="active">Tickets</li>
@@ -70,7 +69,88 @@ if (isset($trip->id)) {
                                 <div class="css-1vgk0gh">How many tickets?</div>
                             </div>
                             <div class="css-1fvf6y0">
-                                <div class="css-1ultjej"><div class="css-y8a1hp"><div class="css-18p1y7y">Adult (15+)</div><div class="normal css-1ikr54u"><div class="css-lepz45">EGP&nbsp;401.93</div></div></div><div class="css-1rz3e28"><button id="rm0" class="css-5c2d0g" type="button" data-testid="rm-ticket"><svg viewBox="0 0 12 12" width="16" height="16" color="hsl(205, 100%, 38%)" role="img"><path d="M11.64 6.624H0V4.983h11.64V1.64z" fill="hsl(205, 100%, 38%)"></path></svg></button><div class="css-yk1xyp"><div  id="cost0" class="css-1gfl9a5">1</div></div><button id="add0" class="css-5c2d0g" type="button" data-testid="add-ticket"><svg viewBox="0 0 12 12" width="16" height="16" color="hsl(205, 100%, 38%)" role="img"><path d="M11.82 6.82h-5v5H5.18v-5h-5V5.18h5v-5h1.64v5h5z" fill="hsl(205, 100%, 38%)"></path></svg></button></div></div><div id="row1" class="css-1ultjej"><div class="css-y8a1hp"><div class="css-18p1y7y">Child (4-14)</div><div class="normal css-1ikr54u"><div class="css-lepz45">EGP&nbsp;200.97</div></div></div><div class="css-1rz3e28"><button id="rm1" class="css-b3qk33" type="button" data-testid="rm-ticket"><svg viewBox="0 0 12 12" width="16" height="16" color="hsl(0, 0%, 74.1%)" role="img"><path d="M11.64 6.624H0V4.983h11.64V1.64z" fill="hsl(0, 0%, 74.1%)"></path></svg></button><div class="css-yk1xyp"><div id="cost1" class="css-1gfl9a5">0</div></div><button id="add1" class="css-5c2d0g" type="button" data-testid="add-ticket"><svg viewBox="0 0 12 12" width="16" height="16" color="hsl(205, 100%, 38%)" role="img"><path d="M11.82 6.82h-5v5H5.18v-5h-5V5.18h5v-5h1.64v5h5z" fill="hsl(205, 100%, 38%)"></path></svg></button></div></div><div id="row2" class="css-1ultjej"><div class="css-y8a1hp"><div class="css-18p1y7y">Infant (0-3)</div><div class="normal css-1ikr54u"><div class="css-lepz45">EGP&nbsp;0</div></div></div><div class="css-1rz3e28"><button id="rm2" class="css-b3qk33" type="button" data-testid="rm-ticket"><svg viewBox="0 0 12 12" width="16" height="16" color="hsl(0, 0%, 74.1%)" role="img"><path d="M11.64 6.624H0V4.983h11.64V1.64z" fill="hsl(0, 0%, 74.1%)"></path></svg></button><div class="css-yk1xyp"><div id="cost2" class="css-1gfl9a5">0</div></div><button id="add2" class="css-5c2d0g" type="button" data-testid="add-ticket"><svg viewBox="0 0 12 12" width="16" height="16" color="hsl(205, 100%, 38%)" role="img"><path d="M11.82 6.82h-5v5H5.18v-5h-5V5.18h5v-5h1.64v5h5z" fill="hsl(205, 100%, 38%)"></path></svg></button></div></div></div>
+                                <div class="css-1ultjej">
+                                    <div class="css-y8a1hp">
+                                        <div class="css-18p1y7y">Adult (15+)</div>
+                                        <div class="normal css-1ikr54u">
+                                            <div class="css-lepz45">{{"EGP " .$trip->adult}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="css-1rz3e28">
+                                        <button id="rm0" class="css-5c2d0g" type="button" data-testid="rm-ticket">
+                                            <svg viewBox="0 0 12 12" width="16" height="16" color="hsl(205, 100%, 38%)"
+                                                 role="img">
+                                                <path d="M11.64 6.624H0V4.983h11.64V1.64z"
+                                                      fill="hsl(205, 100%, 38%)"></path>
+                                            </svg>
+                                        </button>
+                                        <div class="css-yk1xyp">
+                                            <div id="cost0" class="css-1gfl9a5">1</div>
+                                        </div>
+                                        <button id="add0" class="css-5c2d0g" type="button" data-testid="add-ticket">
+                                            <svg viewBox="0 0 12 12" width="16" height="16" color="hsl(205, 100%, 38%)"
+                                                 role="img">
+                                                <path d="M11.82 6.82h-5v5H5.18v-5h-5V5.18h5v-5h1.64v5h5z"
+                                                      fill="hsl(205, 100%, 38%)"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="row1" class="css-1ultjej">
+                                    <div class="css-y8a1hp">
+                                        <div class="css-18p1y7y">Child (4-14)</div>
+                                        <div class="normal css-1ikr54u">
+                                            <div class="css-lepz45">{{"EGP " .$trip->child}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="css-1rz3e28">
+                                        <button id="rm1" class="css-b3qk33" type="button" data-testid="rm-ticket">
+                                            <svg viewBox="0 0 12 12" width="16" height="16" color="hsl(0, 0%, 74.1%)"
+                                                 role="img">
+                                                <path d="M11.64 6.624H0V4.983h11.64V1.64z"
+                                                      fill="hsl(0, 0%, 74.1%)"></path>
+                                            </svg>
+                                        </button>
+                                        <div class="css-yk1xyp">
+                                            <div id="cost1" class="css-1gfl9a5">0</div>
+                                        </div>
+                                        <button id="add1" class="css-5c2d0g" type="button" data-testid="add-ticket">
+                                            <svg viewBox="0 0 12 12" width="16" height="16" color="hsl(205, 100%, 38%)"
+                                                 role="img">
+                                                <path d="M11.82 6.82h-5v5H5.18v-5h-5V5.18h5v-5h1.64v5h5z"
+                                                      fill="hsl(205, 100%, 38%)"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="row2" class="css-1ultjej">
+                                    <div class="css-y8a1hp">
+                                        <div class="css-18p1y7y">senior (57-90)</div>
+                                        <div class="normal css-1ikr54u">
+                                            <div class="css-lepz45">{{"EGP " .$trip->senior}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="css-1rz3e28">
+                                        <button id="rm2" class="css-b3qk33" type="button" data-testid="rm-ticket">
+                                            <svg viewBox="0 0 12 12" width="16" height="16" color="hsl(0, 0%, 74.1%)"
+                                                 role="img">
+                                                <path d="M11.64 6.624H0V4.983h11.64V1.64z"
+                                                      fill="hsl(0, 0%, 74.1%)"></path>
+                                            </svg>
+                                        </button>
+                                        <div class="css-yk1xyp">
+                                            <div id="cost2" class="css-1gfl9a5">0</div>
+                                        </div>
+                                        <button id="add2" class="css-5c2d0g" type="button" data-testid="add-ticket">
+                                            <svg viewBox="0 0 12 12" width="16" height="16" color="hsl(205, 100%, 38%)"
+                                                 role="img">
+                                                <path d="M11.82 6.82h-5v5H5.18v-5h-5V5.18h5v-5h1.64v5h5z"
+                                                      fill="hsl(205, 100%, 38%)"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="css-mj2shq">
                             <hr class="css-d0w81h">
@@ -84,11 +164,11 @@ if (isset($trip->id)) {
                             </div>
                         </div>
                         <div class="css-19f3u6r">
-                            <button role="button" class="css-hc030e">
-                                <div class="css-14f60nc">
-                                    <div>Next</div>
-                                </div>
-                            </button>
+{{--                            <button role="button" class="css-hc030e">--}}
+{{--                                <div class="css-14f60nc">--}}
+{{--                                    <div>Next</div>--}}
+{{--                                </div>--}}
+{{--                            </button>--}}
                         </div>
                     </div>
                 </div>

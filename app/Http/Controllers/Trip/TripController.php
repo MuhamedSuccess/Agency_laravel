@@ -173,6 +173,14 @@ class TripController extends Controller
         $trip = Trip::find($id);
 
 
+
+//        if (reservation::where('user_id', '=', $user_id)->
+//            where('trip_id', '=', $id)->count() > 0)
+//        {
+//
+//        }
+
+
         // $profile = Profile::where('user_id', $user->id)->first();
         // $comments = Comment::where('user_id', $user->id)->where(function ($query) {
         //     $query->where('trip_id', '>', $id)

@@ -1,14 +1,23 @@
 $(document).ready(function () {
 
 
-    // var form = new formData();
-    // var reservationData;
-
+    sendReservationData();
     formHandler();
 
 
 });
 
+var ReservationData = {
+
+    adults: 0,
+    childs: 0,
+    senior: 0,
+    cost: 0,
+    package: "",
+    trip_id: 0,
+
+
+};
 
 function confirmDetails(id, response) {
 
@@ -49,8 +58,8 @@ function confirmDetails(id, response) {
 
 }
 
-//save reservation data in database
-function formHandler() {
+function sendReservationData() {
+
     var id = $("#trip_id").val();
 
     $("#next1").click(function () {
@@ -78,7 +87,7 @@ function formHandler() {
 
 
         $.ajax({
-            url: '/confirm/' + id, //trip id
+            url: '/send-reservation/' + id, //trip id
             type: 'POST',
             dataType: 'json',
             data: {
@@ -93,7 +102,21 @@ function formHandler() {
             success: function (result) {
                 var data = result;
                 var id = $("#trip_id").val();
-                confirmDetails(parseInt(id), data);
+
+                displayResult(data);
+
+
+                ReservationData.adults = parseInt(adults);
+                ReservationData.childs = parseInt(childs);
+                ReservationData.senior = parseInt(senior);
+                ReservationData.cost = data['cost'];
+                ReservationData.trip_id = parseInt(id);
+                ReservationData.package = package;
+                console.log(ReservationData);
+
+                // confirmDetails(parseInt(id), data);
+
+
                 console.log(result);
 
 
@@ -105,24 +128,68 @@ function formHandler() {
 
 }
 
-
-function displayResult(data) {
+//save reservation data in database
+function formHandler() {
     var id = $("#trip_id").val();
-    if (id !== null) {
-        // var reservationData = confirmDetails(parseInt(id));
 
-        console.log(data);
-        var trip_data = data['trip'][0];
-        var pricing_data = data['pricing'][0];
+    $("#send2").click(function () {
 
-        console.log(trip_data);
-        console.log(pricing_data);
-    }
+
+
+        $.ajax({
+            url: '/confirm/' + id, //trip id
+            type: 'POST',
+            dataType: 'json',
+            data: {
+
+                'adults': ReservationData.adults,
+                'childs': ReservationData.childs,
+                'senior': ReservationData.senior,
+
+                // 'package':
+                // 'package': parseInt(adults) + "xadult+" + parseInt(childs) + "xchild+" + parseInt(senior) + "xsenior"
+            },
+
+            success: function (result) {
+                // var data = result;
+                // var id = $("#trip_id").val();
+                // confirmDetails(parseInt(id), data);
+                console.log(result);
+
+
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+
+    });
+
 
 }
 
-function displayConfirmation(){
-    getReservation
+
+function displayResult(data) {
+    var id = $("#trip_id").val();
+
+
+    console.log(data);
+    var trip_data = data['trip'][0];
+    // var pricing_data = data['pricing'][0];
+    $(".css-1vsmjje").html("EGP&nbsp;" + data['cost']);
+    if (data['cost']) {
+
+        $(".css-1vsmjje").html("EGP&nbsp;" + data['cost']);
+    }
+
+    console.log(trip_data);
+    // console.log(pricing_data);
+
+
+}
+
+function displayConfirmation() {
+    // getReservation
 
     $.ajax({
         url: '/confirm/' + id,

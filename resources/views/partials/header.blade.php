@@ -62,17 +62,19 @@
                     <li class="nav-item dropdown">
                         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action">
 
-                            @if ((Auth::User()))
-                            {{ Auth::user()->name }}
-                            <img src="{{asset('storage/avatar/'.Auth::user()->profile->avatar)}}" id="avatar"
-                                class="user-avatar  img-responsive img-circle" width=40>
+                            
+                                {{ Auth::user()->name }}
+                            @if(Auth::user()->avatar)
+                            
+                                <img src="{{asset('storage/avatar/'.Auth::user()->profile->avatar)}}" id="avatar"
+                                    class="user-avatar  img-responsive img-circle" width=40>
 
                             @else
-                            <img id="avatar" src="{{asset('images/anonymous.png')}}" class="avatar">
+                            <img id="avatar" src="{{asset('images/anonymous.png')}}"  id="avatar" class="user-avatar img-responsive img-circle" width=40>
 
                             @endif
 
-                            <b class="caret"></b></a>
+                            
                         <ul class="dropdown-menu">
                             @if(Auth::user()->user_type =="admin")
                             <li><a href="{{ route('public.dashboardhome') }}" class="dropdown-item"><i

@@ -46,7 +46,7 @@ class reservecontroller extends Controller
     {
         $trip = Trip::find($id);
 
-        $user_id = Auth::user()->id;
+        $user_id = \Auth::user()->id;
         if (reservation::where('user_id', '=', $user_id)->
             where('trip_id', '=', $id)->count() > 0) {
             echo "<script>alert('You have already reserved this trip !');</script>";
@@ -73,9 +73,10 @@ class reservecontroller extends Controller
 
 
                 return response()->json(
-                    ['success' => 'You are accepted in this trip',
-                        'trip' => $trip,
-                        'cost' => $cost
+                    ['success' => 'You are ready to reserve the trip',
+                        'trip' => $trip, //reserved trip
+                        'cost' => $cost, //total cost for that trip
+                        'package' => $package //package information and reservation data
                     ]);
 
             } else {
@@ -95,14 +96,19 @@ class reservecontroller extends Controller
 
         $trip = Trip::find($id);
 
-        $user_id = Auth::user()->id;
+        $user_id = \Auth::user()->id;
         if (reservation::where('user_id', '=', $user_id)->
             where('trip_id', '=', $id)->count() > 0) {
             echo "<script>alert('You have already reserved this trip !');</script>";
             $reserve = reservation::All();
             $users = User::all();
             $trip = trip::find($id);
-            return view('reservations', compact('reserve', 'users', 'trip'));;
+//            return view('reservations', compact('reserve', 'users', 'trip'));
+            return response()->json(['error' => 'You have already reserved this trip !',
+
+                'trip' => $trip,
+                'reserve' => $reserve
+                ]);
         } else {
 
             if (request()->ajax()) {
@@ -113,7 +119,7 @@ class reservecontroller extends Controller
                 $reserve->reserve = '1';
 
 //                $reserve->phone = $request->input('phone');
-                $reserve->phone = 82398768;
+                $reserve->phone = 2432398;
 
                 $reserve->adult = $request->adults;
                 $reserve->child = $request->childs;

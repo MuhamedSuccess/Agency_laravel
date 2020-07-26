@@ -144,7 +144,7 @@
 <script>
     CKEDITOR.replace('description');
 </script>
-<script src="tinymce/tinymce.min.js"></script>
+<!-- <script src="tinymce/tinymce.min.js"></script>
 <script>
     tinymce.init({
         selector: '#editor'
@@ -156,7 +156,7 @@
     tinymce.init({
         selector: '#editor'
     });
-</script>
+</script> -->
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script>
@@ -209,29 +209,3 @@
 
 
 </script>
-{{-- <script>
-    $(document).ready(function(){
-
-        $("#submit").click(function(e){
-            e.preventDefault();
-
-            $.ajax({
-                url: "{{url('/trip/create')}}",
-method: 'POST',
-data: {
-name: $("#name").val(),
-description: $("#description").val(),
-days: $("#description").val(),
-plan: $("#plan").val(),
-place: $("#place").val(),
-guide: $("#place").val(),
-},
-success: function(result){
-console.log(result);
-}
-
-});
-
-});
-});
-</script> --}}

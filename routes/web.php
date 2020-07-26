@@ -57,6 +57,8 @@ Route::get('/userreservation', 'reservecontroller@userreservation');
 
 Route::get('/trip/reserve/{id}', 'reservecontroller@index');
 Route::post('/confirm/{id}', 'reservecontroller@confirm');
+Route::post('/send-reservation/{id}', 'reservecontroller@getReservationData');
+
 Route::get('/reservationdetails/{id}', 'reservecontroller@getreservationDetails');
 Route::get('/deletereserve/{id}', 'reservecontroller@delete');
 //getReservation
@@ -117,31 +119,35 @@ Route::get('/display', function () {
 
 // mail routes
 
-Route::get('/mail', function () {
+Route::get('/mail/{id}', function () {
     return view('pages.messanger.home');
 });
+
+Route::post('/sendmail', 'MailController@send_message')->name('message.send');
+
+
 
 // Route::get ( '/mail', function () {
 // 	return view ( 'pages.messanger.mail' );
 // } );
 
-Route::any('sendemail', function () {
-    if (Request::get('message') != null)
-        $data = array(
-            'bodyMessage' => Request::get('message')
-        );
-    else
-        $data[] = '';
-    Mail::send('pages.messanger.email', $data, function ($message) {
-
-        $message->from('ahmedadelfcih182@gmail.com', 'Just Laravel');
-
-        $message->to(Request::get('toEmail'))->subject('Just Laravel demo email using SendGrid');
-    });
-    return Redirect::back()->withErrors([
-        'Your email has been sent successfully'
-    ]);
-});
+//Route::any('sendemail', function () {
+//    if (Request::get('message') != null)
+//        $data = array(
+//            'bodyMessage' => Request::get('message')
+//        );
+//    else
+//        $data[] = '';
+//    Mail::send('pages.messanger.email', $data, function ($message) {
+//
+//        $message->from('Mohamed.adel01@fci.helwan.edu.eg', 'Just Laravel');
+//
+//        $message->to(Request::get('toEmail'))->subject('Just Laravel demo email using SendGrid');
+//    });
+//    return Redirect::back()->withErrors([
+//        'Your email has been sent successfully'
+//    ]);
+//});
 
 
 

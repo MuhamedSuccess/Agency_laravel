@@ -65,3 +65,33 @@
         position: initial;
     }
 }
+
+#fh5co-logo {
+    position: relative;
+    z-index: 2;
+    font-size: 28px;
+    text-transform: uppercase;
+    margin-top: 35px;
+    font-weight: 700;
+    float: left;
+    padding-left: 40px;
+}
+
+#fh5co-logo a {
+    color: #F78536;
+}
+
+
+#fh5co-logo i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    color: #F78536;
+    background: rgba(0, 0, 0, 0.06);
+    padding: 10px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+}

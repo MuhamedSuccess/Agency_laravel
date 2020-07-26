@@ -6,24 +6,24 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
         <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    
+
 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
         {{-- CSRF Token --}}
         <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
         <title>@hasSection('template_title')@yield('template_title') | @endif
             {{ config('app.name', Lang::get('titles.app')) }}</title>
         <meta name="description" content="">
         <meta name="author" content="Jeremy Kenedy">
         <!-- <link rel="shortcut icon" href="/favicon.ico"> -->
-    
+
         <!-- Facebook and Twitter integration -->
         <meta property="og:title" content="" />
         <meta property="og:image" content="" />
@@ -34,13 +34,13 @@
         <meta name="twitter:image" content="" />
         <meta name="twitter:url" content="" />
         <meta name="twitter:card" content="" />
-    
-    
+
+
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <link rel="shortcut icon" href="favicon.ico">
-    
+
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-    
+
         <!-- Animate.css -->
         <link rel="stylesheet" href="{{ asset('travel/css/animate.css') }}">
         <!-- Icomoon Icon Fonts-->
@@ -56,13 +56,13 @@
         <!-- CS Select -->
         <link rel="stylesheet" href="{{ asset('travel/css/cs-select.css') }}">
         <link rel="stylesheet" href="{{ asset('travel/css/cs-skin-border.css') }}">
-    
+
         <link rel="stylesheet" href="{{ asset('travel/css/style.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-        
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -114,13 +114,13 @@
                 <div class="row">
                     <h2>Trip Details !</h2>
                 </div>
-                
+
                 <div class="block">
                   <div class="row">
                     <div class="span4"  data-animate-effect="fadeIn">
-                        <img src="{{ asset('uploads/trips/'.$trip->trip_cover ) }}" alt="image" class="img-left" width="100%" height="100%" >                     
+                        <img src="{{ asset('uploads/trips/'.$trip->trip_cover ) }}" alt="image" class="img-left" width="100%" height="100%" >
                       <p></p>
-                      
+
                     </div>
 
                     <div class="card-body" style="width: 85% ; ">
@@ -139,7 +139,7 @@
                         $description =  htmlspecialchars_decode($trip['description']);
                         echo $description;
                     ?>
-                                <!-- {{$trip->description }}--></td> 
+                                <!-- {{$trip->description }}--></td>
                               </tr>
                               <tr>
                                 <td> <strong>Days</strong> </td>
@@ -147,7 +147,7 @@
                               </tr>
                            <tr>
                            <td>
-                                          
+
                                           @if ($trip->status== 'available')
                                               @php $badgeClass = 'primary' @endphp
                                           @elseif ($trip->status == 'complete')
@@ -158,15 +158,15 @@
                                               @php $badgeClass = 'default' @endphp
                                           @endif
                                           <span class="badge badge-{{$badgeClass}}">{{ $trip->status }}</span>
-                                    
+
                                   </td>
                            </tr>
                               <tr>
-                                 <td></td> 
+                                 <td></td>
                                 <td class="text-center">
                                 @if($trip->status== 'available')
                                     <a class="btn btn-success" href="/trip/reserve/{{$trip->id}}">Reserve trip<i class="icon-arrow-right22"></i></a>
-                                @endif    
+                                @endif
                                 </td>
                               </tr>
                             </tbody>
@@ -178,6 +178,22 @@
 
                     </div>
 
+
+                    <div id="map-canvas" style="margin: 0;padding: 0;height:300"></div>
+
+                    <input type="hidden" id="lat" name="lat" value="0"/>
+                    <input type="hidden" id="lng" name="lng" value="0"/>
+
+                    <?php
+//                    if(isset($trip->lat) && isset($trip->lng))
+//                    {
+//
+//
+//                    }
+
+?>
+<!-- <input type="hidden"  id="lat" name="lat" value="'.$trip->id.'">
+                    <input type="hidden"  id="lng" name="lng" value="0"> -->
 
 
                 <div class="block">
@@ -191,15 +207,15 @@
                     @include('comment.commentsDisplay', ['comments' => $comments, 'trip_id' => $trip->id])
                     <hr />
                     @include('comment.add-comment')
-                    
+
                 </div>
 
                 </div>
-        
-           
+
+
                  </div>
                 </div>
-                
+
             </div>
 
             <br><br><br><br><br><br><br><br><br><br>
@@ -217,70 +233,73 @@
 
     <script src="{{asset('comment/js/main.js')}}"></script>
 
-      
-      <!-- rating.js file -->
-      <script src="js/addons/rating.js"></script>
-    {{-- <script src="{{asset('nav-filter/js/jquery-ui.js')}}"></script> --}}
 
-    {{-- <script>
-        $(document).ready(function() {
 
-            filter_data();
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
-            function filter_data() {
-                $('.filter_data').html('<div id="loading" style="" ></div>');
-                var action = 'fetch_data';
-                var minimum_price = $('#hidden_minimum_price').val();
-                var maximum_price = $('#hidden_maximum_price').val();
-                var brand = get_filter('brand');
-                var ram = get_filter('ram');
-                var storage = get_filter('storage');
-                $.ajax({
-                    url: "fetch_data.php"
-                    , method: "POST"
-                    , data: {
-                        action: action
-                        , minimum_price: minimum_price
-                        , maximum_price: maximum_price
-                        , brand: brand
-                        , ram: ram
-                        , storage: storage
-                    }
-                    , success: function(data) {
-                        $('.filter_data').html(data);
-                    }
-                });
-            }
-
-            function get_filter(class_name) {
-                var filter = [];
-                $('.' + class_name + ':checked').each(function() {
-                    filter.push($(this).val());
-                });
-                return filter;
-            }
-
-            $('.common_selector').click(function() {
-                filter_data();
-            });
-
-            $('#price_range').slider({
-                range: true
-                , min: 1000
-                , max: 65000
-                , values: [1000, 65000]
-                , step: 500
-                , stop: function(event, ui) {
-                    $('#price_show').html(ui.values[0] + ' - ' + ui.values[1]);
-                    $('#hidden_minimum_price').val(ui.values[0]);
-                    $('#hidden_maximum_price').val(ui.values[1]);
-                    filter_data();
-                }
-            });
-
+    <script>
+        tinymce.init({
+            selector: '#editor'
         });
+    </script>
 
-    </script> --}}
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+        var map;
+        var markersArray=[];
+        function initialize() {
+            var mapOptions = {
+                zoom: 8,
+                center: new google.maps.LatLng(26.8206,30.8025),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+
+            deleteOverlays();
+
+            var panPoint = new google.maps.LatLng(26.8206, 30.8025);
+            map.setCenter(panPoint)
+            var marker = new google.maps.Marker({
+                map: map,
+                position: {
+                    lat: 26.8206,
+                    lng: 30.8025
+                },
+                draggable: true
+            });
+            markersArray.push(marker);
+
+
+
+            function deleteOverlays() {
+                if (markersArray) {
+                    for (i in markersArray) {
+                        markersArray[i].setMap(null);
+                    }
+                    markersArray.length = 0;
+                }
+            }
+
+            google.maps.event.addListener(marker, 'dragend', function(ev){
+                // alert(marker.getPosition().lat());
+                // alert(marker.getPosition().lng());
+                document.getElementById("lat").value = marker.getPosition().lat();
+                document.getElementById("lng").value = marker.getPosition().lng();
+            });
+
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+    </script>
+
+
+{{--      @include('partials.demo-map')--}}
+
 
 </body>
 

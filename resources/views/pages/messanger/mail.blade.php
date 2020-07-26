@@ -1,4 +1,4 @@
-<form class="w3-container" action="sendemail" method="POST"
+<form class="w3-container" action="/sendemail" method="POST"
             role="email">
             {{ csrf_field() }}
             <p>

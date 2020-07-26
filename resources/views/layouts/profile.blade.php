@@ -66,19 +66,19 @@
                 <li>
                     <a href="table.html">
                         <i class="pe-7s-note2"></i>
-                        <p>Table List</p>
+                        <p>My Reservation</p>
                     </a>
                 </li>
                 <li>
                     <a href="typography.html">
                         <i class="pe-7s-news-paper"></i>
-                        <p>Typography</p>
+                        <p>Feed Back</p>
                     </a>
                 </li>
                 <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
-                        <p>Icons</p>
+                        <p>Book marks</p>
                     </a>
                 </li>
                 <li>
@@ -107,22 +107,23 @@
         <nav class="navbar navbar-default navbar-fixed">
             <div class="container-fluid">
                 <div class="navbar-header">
+                <h1 id="fh5co-logo"><a href="http://localhost:8080/trip"><i class="icon-airplane"></i>Travel</a></h1>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Dashboard</a>
+                    
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li>
+                        <!-- <li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-dashboard"></i>
 								<p class="hidden-lg hidden-md">Dashboard</p>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-globe"></i>
@@ -140,12 +141,12 @@
                                 <li><a href="#">Another notification</a></li>
                               </ul>
                         </li>
-                        <li>
+                        <!-- <li>
                            <a href="">
                                 <i class="fa fa-search"></i>
 								<p class="hidden-lg hidden-md">Search</p>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">

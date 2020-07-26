@@ -36,7 +36,7 @@ class UserController extends Controller
             $places = places::all();
 
 //            return view('pages.travel.index')->with('trips', $trips)->with('places' , $places ) ;
-            return view('pages.travel.index')->with('trips', $trips);
+                return view('pages.travel.index')->with('places', $places)->with('trips', $trips);
 
         }
 
@@ -47,13 +47,14 @@ class UserController extends Controller
     public function index_old()
     {
         $user = Auth::user();
-        $places = places::all();
+        
 
         if ($user->isAdmin()) {
 
             return view('pages.admin.home');
 
         }else{
+            $places = places::all();
             $trips = Trip::all();
             return view('pages.travel.index')->with('places', $places)->with('trips', $trips);
 
