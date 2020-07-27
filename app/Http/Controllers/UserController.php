@@ -71,6 +71,7 @@ class UserController extends Controller
         $maxGuide = 0;
         $maxUserId =0;
         $maxGuideId = 0; 
+        $allTrips = Trip::all();
         foreach (User::all() as $user) {
             if ($user->reservations()->count() > $maxUser) {
                 $maxUser = $user->reservations()->count();
@@ -94,9 +95,9 @@ class UserController extends Controller
         $topTrips = Trip::find($this->topTrips());
         $lowTrips = Trip::find($this->lowTrips());
 
-        $pdfFile = PDF::loadView('reports.most', compact('topTrips', 'lowTrips', 'maxUser', 'maxGuide'));
+        $pdfFile = PDF::loadView('reports.most', compact('topTrips', 'lowTrips', 'maxUser', 'maxGuide','allTrips'));
         $pdfFile->save(storage_path() . 'report' . time() . '.pdf');
-        return $pdfFile->download('report.pdf');
+        return $pdfFile->stream('report.pdf');
     }
 
     public function topTrips()
